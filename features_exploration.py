@@ -12,7 +12,7 @@ train_labels = pd.read_csv('train-labels.csv', sep=',', header=None)
 
 number_of_classes = train_labels.iloc[:, 1].max() + 1  # There are 10 classes.
 distribution_among_classes = [list(train_labels.iloc[:, 1]).count(i) for i in range(number_of_classes)]
-number_of_training_data = train_labels.max()[0]  # There are 57500 samples.
+number_of_training_data = train_labels.shape[0]  # There are 57500 samples.
 dimension_of_data = len(train_data.columns) - 1  # 717 = 3 * 239 is the dimension of the data.
 
 
@@ -42,6 +42,7 @@ fig_non_zero.set_size_inches(5, 3)
 ax_non_zero[0][0].plot(range(1, plot_length + 1), first_non_zero, '.k')
 ax_non_zero[0][1].plot(range(1, plot_length + 1), last_non_zero, '.r')
 ax_non_zero[1][0].plot(range(1, plot_length + 1), width_non_zero, '.b')
+fig_non_zero.savefig('non_zero.pdf')
 fig_non_zero.show()
 
 # Ok dude it seems that the data has kind of effective length and the position is kind of randomly selected.
@@ -62,6 +63,8 @@ for investigated_class in investigated_classes:
         if train_labels.iloc[sample, 1] == investigated_class:
             first_non_zero_investigated_class.append(np.nonzero(np.array(train_data.iloc[sample, 1:]))[0][0])
     my_ax = ax_non_zero_by_class[investigated_class // 2][investigated_class % 2]
-    my_ax.plot(range(len(first_non_zero_investigated_class)), first_non_zero_investigated_class, '.g', label='class {}'.format(investigated_class))
-    my_ax.legend(loc='best')
+    my_ax.plot(range(len(first_non_zero_investigated_class)), first_non_zero_investigated_class, '.g')
+    my_ax.title.set_text('class {}'.format(investigated_class))
+    my_ax.set_ylim(0, 300)
+fig_non_zero_by_class.savefig('non_zero_by_class.pdf')
 fig_non_zero_by_class.show()
