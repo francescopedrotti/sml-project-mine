@@ -66,6 +66,6 @@ print('Inner test error with {}: {:.3f}'.format(classifier_name, inner_test_err)
 
 '''
 Inner test error with Ridge: 0.145
-SMV takes too long... Haven't tried
+SVM takes too long... Haven't tried
 Inner test error with LogReg: 0.091
 '''
